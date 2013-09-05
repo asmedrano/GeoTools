@@ -11,9 +11,9 @@ import ogr
 
 parser = argparse.ArgumentParser()
 parser.add_argument("shp", help="path to shapefile")
-parser.add_argument("-i", "--info", type=bool, help="Show layers info in ShapeFile", default=False)
-parser.add_argument("-l", "--layer", type=str, help="The layer to use")
-parser.add_argument("-k", "--key", type=str, help="The Field to use as a Unique Key When Converting")
+parser.add_argument("-i", "--info", type=bool, help="Show layers info in ShapeFile. When used with '-l' shows info about layer", default=False)
+parser.add_argument("-l", "--layer", type=str, help="The layer to use.")
+parser.add_argument("-k", "--key", type=str, help="The Field to use as a Unique Key When Converting to json. This is how Features are labeled.")
 
 args = parser.parse_args()
 
@@ -70,7 +70,7 @@ def iter_layer_features(lyr, field_key):
     for ftr in lyr:
         key = ftr.GetFieldAsString(field_key).strip()
         #incase key is an empty string, we'll stick in a uuid
-        if key and key == "":
+        if key == "":
             key = str(uuid.uuid4())
         layers[key] = {}
         field_vals = {}
